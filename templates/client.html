@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Web Client Starter</title>
+
+    <meta name="description" content="HTML Page">
+    <meta name="author" content="Juice">
+
+    <!--
+    <link rel="stylesheet" href="css/styles.css?v=1.0">
+    -->
+
+    <!--[if lt IE 9]>
+      <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+</head>
+<body>
+
+    <div class="content-wrapper">
+
+        <h4>Welcome to the web client</h4>
+
+        <input id="input" type="text">
+        <input id="submit" type="button" value="submit">
+
+    </div>
+
+    <script>
+
+        (function() {
+
+            var ws = new WebSocket("ws://localhost:8989/websocket");
+
+            var input = document.getElementById( 'input' );
+            var submit = document.getElementById( 'submit' );
+
+            var getInput = function() {
+                return input.value;
+            }
+    
+            var submitInput = function() {
+                var input = getInput();
+                ws.send( input );
+            }
+
+            ws.onmessage = function( evt ) {
+                alert( evt.data );
+            }
+
+            submit.addEventListener( 'click' , submitInput );
+
+
+            /*
+            ws.onopen = function() {
+               ws.send("Hello, world");
+            };
+
+            ws.onmessage = function (evt) {
+               alert(evt.data);
+            };
+            */
+
+        })();
+
+    </script>
+
+</body>
+</html>
+
