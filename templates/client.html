@@ -10,9 +10,7 @@
     <meta name="description" content="HTML Page">
     <meta name="author" content="Juice">
 
-    <!--
-    <link rel="stylesheet" href="css/styles.css?v=1.0">
-    -->
+    <link rel="stylesheet" href="/static/css/styles.css?v=1.0">
 
     <!--[if lt IE 9]>
       <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -23,6 +21,8 @@
 
     <div class="content-wrapper">
 
+        <div class="qr-tag" id="qrcode"></div>
+
         <h4>Welcome to the web client</h4>
 
         <input id="input" type="text">
@@ -30,9 +30,13 @@
 
     </div>
 
+    <script src="/static/lib/qrcode.min.js"></script>
     <script>
 
         (function() {
+
+            // -----------------------------------------------
+            // websocket stuff
 
             var ws = new WebSocket("ws://localhost:8989/websocket");
 
@@ -54,7 +58,6 @@
 
             submit.addEventListener( 'click' , submitInput );
 
-
             /*
             ws.onopen = function() {
                ws.send("Hello, world");
@@ -64,6 +67,36 @@
                alert(evt.data);
             };
             */
+
+            // -----------------------------------------------
+            // qr code stuff
+
+            var currentUrl = window.location.href;
+            var destinationUrl = currentUrl;
+
+            /*
+            var localAddress = "localhost:9191";
+            var networkAddress = "192.168.0.137:9191";
+            var localUrl = window.location.href;
+            var networkUrl = localUrl.replace( localAddress , networkAddress );
+            var destinationUrl = networkUrl;
+            */
+
+            // manual overwrite ghetto edition:
+            // destinationUrl = "http://192.168.0.137:8989/client";
+
+            console.log( destinationUrl );
+
+            var qrcode = new QRCode( "qrcode" , {
+                text: destinationUrl ,
+                width: 128 ,
+                height: 128 ,
+                colorDark : "#000000" ,
+                colorLight : "#ffffff" ,
+                correctLevel : QRCode.CorrectLevel.H
+            });
+
+            // 
 
         })();
 
