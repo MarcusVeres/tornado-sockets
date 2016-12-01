@@ -39,7 +39,7 @@ class EchoWebSocket( tornado.websocket.WebSocketHandler ) :
 
 class ClientSocket( tornado.web.RequestHandler ) :
     def get( self ) : 
-        loader = template.Loader( "/Users/marcus.veres/learning/tornado/m1/" )
+        loader = template.Loader( BASE_PATH )
         response = loader.load( "templates/client.html" ).generate( myvalue = "AAA" )
         self.write( response )
 
