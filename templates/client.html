@@ -38,7 +38,21 @@
             // -----------------------------------------------
             // websocket stuff
 
-            var ws = new WebSocket("ws://localhost:8989/websocket");
+            // console.log( "1" , window.location.hostname );
+            // console.log( "2" , window.location.pathname );
+            // console.log( "3" , window.location.href );
+            // console.log( "4" , window.location.protocol );
+
+            var protocol = window.location.protocol;
+            var hostname = window.location.hostname;
+            var pathname = window.location.pathname; 
+            var href = window.location.href;
+
+            var socketUrl = href.replace( protocol , 'ws:' );
+            socketUrl = socketUrl.replace( pathname , '/websocket' );
+            console.log( socketUrl );
+
+            var ws = new WebSocket( socketUrl );
 
             var input = document.getElementById( 'input' );
             var submit = document.getElementById( 'submit' );
