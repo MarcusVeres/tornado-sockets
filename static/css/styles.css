@@ -19,3 +19,11 @@ h4 {
     display: inline-block;
 }
 
+#cursor {
+    position: absolute;
+    padding: 12px;
+    color: white;
+    background: red;
+    margin: 24px;
+}
+

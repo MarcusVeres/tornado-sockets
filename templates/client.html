@@ -28,6 +28,8 @@
         <input id="input" type="text">
         <input id="submit" type="button" value="submit">
 
+        <div id="cursor">hue</div>
+
     </div>
 
     <script src="/static/lib/qrcode.min.js"></script>
@@ -56,6 +58,7 @@
 
             var input = document.getElementById( 'input' );
             var submit = document.getElementById( 'submit' );
+            var cursor = document.getElementById( "cursor" );
 
             var getInput = function() {
                 return input.value;
@@ -67,10 +70,24 @@
             }
 
             ws.onmessage = function( evt ) {
-                alert( evt.data );
+                // alert( evt.data );
+                console.log( evt.data );
+                cursor.style.left = ( evt.data * 4 ) + "px";
             }
 
             submit.addEventListener( 'click' , submitInput );
+
+
+            // -----------------------------------------------
+            // phone orientation stuff
+
+            window.ondevicemotion = function( event )
+            {
+                var x = event.accelerationIncludingGravity.x;
+                var y = event.accelerationIncludingGravity.y;
+                ws.send( x );
+            }
+
 
             /*
             ws.onopen = function() {
@@ -109,8 +126,6 @@
                 colorLight : "#ffffff" ,
                 correctLevel : QRCode.CorrectLevel.H
             });
-
-            // 
 
         })();
 
