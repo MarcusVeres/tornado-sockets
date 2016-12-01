@@ -28,7 +28,10 @@
         <input id="input" type="text">
         <input id="submit" type="button" value="submit">
 
+        <h4 id="hud">HUD</h4>
+
         <div id="cursor">hue</div>
+
 
     </div>
 
@@ -58,6 +61,7 @@
 
             var input = document.getElementById( 'input' );
             var submit = document.getElementById( 'submit' );
+            var hud = document.getElementById( "hud" );
             var cursor = document.getElementById( "cursor" );
 
             var getInput = function() {
@@ -72,7 +76,7 @@
             ws.onmessage = function( evt ) {
                 // alert( evt.data );
                 console.log( evt.data );
-                cursor.style.left = ( evt.data * 4 ) + "px";
+                hud.innerHTML = evt.data;
             }
 
             submit.addEventListener( 'click' , submitInput );
@@ -85,9 +89,12 @@
             {
                 var x = event.accelerationIncludingGravity.x;
                 var y = event.accelerationIncludingGravity.y;
-                ws.send( x );
-            }
 
+                var tilt = Math.round( x * 10 );                
+                input.value = tilt;
+
+                ws.send( tilt );
+            }
 
             /*
             ws.onopen = function() {
